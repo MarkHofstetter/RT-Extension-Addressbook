@@ -33,6 +33,14 @@ INSTALLATION
 
     Restart your webserver
 
+    Create DB table
+
+    CREATE TABLE AdressBooks (
+        id INT NOT NULL AUTO_INCREMENT,
+        address VARCHAR(512) NOT NULL,
+        PRIMARY KEY(id)
+    );
+
 AUTHOR
     Mark Hofstetter, University of Vienna <mark@hofstetter.at>
 
