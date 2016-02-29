@@ -53,17 +53,13 @@ or add C<RT::Extension::Addressbook> to your existing C<@Plugins> line.
 
 =head1 AUTHOR
 
-Best Practical Solutions, LLC E<lt>modules@bestpractical.comE<gt>
+Mark Hofstetter, University of Vienna E<lt>mark@hofstetter.atE<gt>
 
 =head1 BUGS
 
-All bugs should be reported via email to
+All bugs should be reported via the web at
 
-    L<bug-RT-Extension-Addressbook@rt.cpan.org|mailto:bug-RT-Extension-Addressbook@rt.cpan.org>
-
-or via the web at
-
-    L<rt.cpan.org|http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-Addressbook>.
+    L<https://github.com/MarkHofstetter/RT-Extension-Addressbook/issues>.
 
 =head1 LICENSE AND COPYRIGHT
 
@@ -76,9 +72,11 @@ This is free software, licensed under:
 =cut
 
 sub get_emailaddresses {
+  my ($QueueId) = @_;
   my $dbh = RT->DatabaseHandle->dbh;
   $dbh->{FetchHashKeyName} = 'NAME_lc';
-  my $sth = $dbh->prepare('select * from addressbook');  
+  my $sth = $dbh->prepare('select * from AddressBooks'); #  where IdQueue = :queueid');  
+#  $sth->bind_param(':queueid', $QueueId);
   $sth->execute;
   return $sth->fetchall_hashref('id')
 }

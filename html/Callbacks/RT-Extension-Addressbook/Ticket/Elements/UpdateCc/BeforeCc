@@ -8,32 +8,61 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
 
 </%INIT>
 
-<script id="address_selector">
-<select id="transactionType" multiple="multiple" size="10">
+<script id="cc_selector">
+<select id="cc_select" multiple="multiple" size="10">
 %foreach my $id ( keys %$addressbook ) {
-  <option value="<%$addressbook->{$id}->{email}%>"><%$addressbook->{$id}->{email}%></option>
+  <option value="<%$addressbook->{$id}->{address}%>"><%$addressbook->{$id}->{address}%></option>
+%}
+</select>
+</script>
+
+<script id="bcc_selector">
+<select id="bcc_select" multiple="multiple" size="10">
+%foreach my $id ( keys %$addressbook ) {
+  <option value="<%$addressbook->{$id}->{address}%>"><%$addressbook->{$id}->{address}%></option>
 %}
 </select>
 </script>
 
 <script>
   jQuery('document').ready(function() {
-    var text = jQuery("#address_selector").html() ;
+    var text = jQuery("#cc_selector").html() ;
+    var adr_field_id = "#UpdateCc";
 
-    jQuery("#UpdateCc").after( text );
+    jQuery(adr_field_id).after( text );
 
 // XXX adding and deleting emails has to be more robust 
-    jQuery("#transactionType").multiselect({
+    jQuery("#cc_select").multiselect({
       header: false,
       click: function(event, ui) {
         if (ui.checked) {
           jQuery("#UpdateCc").val(jQuery("#UpdateCc").val() + ', ' +  ui.value);
         } else {
-          jQuery("#UpdateCc").val(jQuery("#UpdateCc").val().replace(', ' + ui.value, ''));
+          jQuery("#UpdateCc").val(jQuery("#UpdateCc").val().replace(ui.value, ''));
         }
+        jQuery("#UpdateCc").val(jQuery("#UpdateCc").val().replace(/^\s*,/, ''));
+        jQuery("#UpdateCc").val(jQuery("#UpdateCc").val().replace(/\s*,\s*$/, ''));
       }
     }); 
 
+    text = jQuery("#bcc_selector").html() ;
+    adr_field_id = "#UpdateBcc";
+
+    jQuery(adr_field_id).after( text );
+
+    jQuery("#bcc_select").multiselect({
+      header: false,
+      click: function(event, ui) {
+        if (ui.checked) {
+          jQuery(adr_field_id).val(jQuery(adr_field_id).val() + ', ' +  ui.value);
+        } else {
+          jQuery(adr_field_id).val(jQuery(adr_field_id).val().replace(ui.value, ''));
+        }
+        jQuery(adr_field_id).val(jQuery(adr_field_id).val().replace(/^\s*,/, ''));
+        jQuery(adr_field_id).val(jQuery(adr_field_id).val().replace(/\s*,\s*$/, ''));
+      }
+    });
   });
+
 </script>
 

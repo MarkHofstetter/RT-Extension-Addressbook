@@ -1,7 +1,7 @@
 ---
 abstract: 'RT-Extension-Addressbook Extension'
 author:
-  - 'Best Practical Solutions, LLC <modules@bestpractical.com>'
+  - 'Mark Hofstetter, University of Vienna <mark@hofstetter.at>'
 build_requires:
   ExtUtils::MakeMaker: 6.59
 configure_requires:

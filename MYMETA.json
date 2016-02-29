@@ -1,7 +1,7 @@
 {
    "abstract" : "RT-Extension-Addressbook Extension",
    "author" : [
-      "Best Practical Solutions, LLC <modules@bestpractical.com>"
+      "Mark Hofstetter, University of Vienna <mark@hofstetter.at>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Module::Install version 1.08, CPAN::Meta::Converter version 2.143240",

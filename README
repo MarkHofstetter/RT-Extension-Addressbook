@@ -34,16 +34,12 @@ INSTALLATION
     Restart your webserver
 
 AUTHOR
-    Best Practical Solutions, LLC <modules@bestpractical.com>
+    Mark Hofstetter, University of Vienna <mark@hofstetter.at>
 
 BUGS
-    All bugs should be reported via email to
+    All bugs should be reported via the web at
 
-        L<bug-RT-Extension-Addressbook@rt.cpan.org|mailto:bug-RT-Extension-Addressbook@rt.cpan.org>
-
-    or via the web at
-
-        L<rt.cpan.org|http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-Addressbook>.
+        L<https://github.com/MarkHofstetter/RT-Extension-Addressbook/issues>.
 
 LICENSE AND COPYRIGHT
     This software is Copyright (c) 2015 by Mark Hofstetter

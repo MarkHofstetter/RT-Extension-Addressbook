@@ -12,7 +12,7 @@
 #   MakeMaker Parameters:
 
 #     ABSTRACT => q[RT-Extension-Addressbook Extension]
-#     AUTHOR => [q[Best Practical Solutions, LLC <modules@bestpractical.com>]]
+#     AUTHOR => [q[Mark Hofstetter, University of Vienna <mark@hofstetter.at>]]
 #     BUILD_REQUIRES => { ExtUtils::MakeMaker=>q[6.59] }
 #     CONFIGURE_REQUIRES => {  }
 #     DISTNAME => q[RT-Extension-Addressbook]
@@ -790,7 +790,7 @@ testdb_static :: testdb_dynamic
 ppd :
 	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="$(VERSION)">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT>RT-Extension-Addressbook Extension</ABSTRACT>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <AUTHOR>Best Practical Solutions, LLC &lt;modules@bestpractical.com&gt;</AUTHOR>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <AUTHOR>Mark Hofstetter, University of Vienna &lt;mark@hofstetter.at&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <PERLCORE VERSION="5,008003,0,0" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-5.18" />' >> $(DISTNAME).ppd
