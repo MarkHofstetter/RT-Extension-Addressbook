@@ -12,17 +12,34 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
   jQuery('document').ready(function() {
     "use strict";
 
-    // TODO adding and deleting emails has to be more robust
-    function update_addr_field(el, ui) {
+    function _update_addr_field(el, ui) {
         var val = el.val();
+        var addresses  = val.split(',');
+        _sanitize_addresses(addresses);
         if (ui.checked) {
-          val = val + ', ' +  ui.value;
+          addresses.push(ui.value);
         } else {
-          val = val.replace(ui.value, '');
+          addresses = jQuery.grep(
+            addresses,
+            function(address) { return address !== ui.value }
+          );
         }
-        val = val.replace(/^\s*,/, '');
-        val = val.replace(/\s*,\s*$/, '');
-        el.val(val);
+        el.val(addresses.join(', '));
+    }
+
+    // remove trailing/leading whitespace and commas
+    // also remove entirely empty strings
+    function _sanitize_addresses(addresses) {
+        jQuery.each(addresses, function(index, value) {
+          value = value.replace(/^\s*,*\s*/, '');
+          value = value.replace(/\s*,*\s*$/, '');
+          if (value === '') {
+            addresses.splice(index, 1);
+          }
+          else {
+            addresses[index] = value;
+          }
+        });
     }
 
     function _make_select(id) {
@@ -42,7 +59,7 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
       addr_field.after(text);
       jQuery('#'+select_id).multiselect({
         header: false,
-        click: function(event, ui) { update_addr_field(addr_field, ui) }
+        click: function(event, ui) { _update_addr_field(addr_field, ui) }
       });
     });
 
