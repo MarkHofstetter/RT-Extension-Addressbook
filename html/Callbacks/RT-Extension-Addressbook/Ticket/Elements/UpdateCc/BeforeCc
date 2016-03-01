@@ -10,6 +10,7 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
 
 <script>
   jQuery('document').ready(function() {
+    "use strict";
 
     // TODO adding and deleting emails has to be more robust
     function update_addr_field(el, ui) {
@@ -24,8 +25,8 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
 
     function _make_select(id) {
       return '<select id="' + id + '" multiple="multiple" size="10">' +
-%foreach my $id ( keys %$addressbook ) {
-  '<option value="<%$addressbook->{$id}->{address}%>"><%$addressbook->{$id}->{address}%></option>' +
+%for my $row ( @$addressbook ) {
+  '<option value="<%$row->[0]%>"><%$row->[0]%></option>' +
 %}
         '</select>';
     }

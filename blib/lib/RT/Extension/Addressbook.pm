@@ -72,13 +72,14 @@ This is free software, licensed under:
 =cut
 
 sub get_emailaddresses {
-  my ($QueueId) = @_;
-  my $dbh = RT->DatabaseHandle->dbh;
-  $dbh->{FetchHashKeyName} = 'NAME_lc';
-  my $sth = $dbh->prepare('select * from AddressBooks'); #  where IdQueue = :queueid');  
-#  $sth->bind_param(':queueid', $QueueId);
-  $sth->execute;
-  return $sth->fetchall_hashref('id')
+    my ($QueueId) = @_;
+    my $dbh = RT->DatabaseHandle->dbh;
+    $dbh->{FetchHashKeyName} = 'NAME_lc';
+    my $sth = $dbh->prepare('SELECT address FROM AddressBooks ORDER BY address ASC');
+    #  where IdQueue = :queueid');
+    #  $sth->bind_param(':queueid', $QueueId);
+    $sth->execute;
+    return $sth->fetchall_arrayref;
 }
 
 RT->AddStyleSheets('jquery.multiselect.css');
