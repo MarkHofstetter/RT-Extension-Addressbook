@@ -12,6 +12,11 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
   jQuery('document').ready(function() {
     "use strict";
 
+    var addressbook = [];
+%for my $row ( @$addressbook ) {
+    addressbook.push('<%$row->[0]%>');
+%}
+
     function _update_addr_field(el, ui) {
         var val = el.val();
         var addresses  = val.split(',');
@@ -43,11 +48,12 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
     }
 
     function _make_select(id) {
-      return '<select id="' + id + '" multiple="multiple" size="10">' +
-%for my $row ( @$addressbook ) {
-  '<option value="<%$row->[0]%>"><%$row->[0]%></option>' +
-%}
-        '</select>';
+      var select = '<select id="' + id + '" multiple="multiple" size="10">';
+      jQuery.each(addressbook, function(index, value) {
+        select += '<option value="' + value + '">' + value + '</option>';
+      });
+      select += '</select>';
+      return select;
     }
 
     // add a select field after the CC and BCC address fields
