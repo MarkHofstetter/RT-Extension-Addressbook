@@ -22,7 +22,7 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
         var addresses  = val.split(',');
         _sanitize_addresses(addresses);
         if (ui.checked) {
-          addresses.push(ui.value);
+          _add_address(addresses, ui.value);
         } else {
           addresses = jQuery.grep(
             addresses,
@@ -30,6 +30,18 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
           );
         }
         el.val(addresses.join(', '));
+    }
+
+    // add address only if it doesnt exist already
+    function _add_address(addresses, address) {
+      var matching_addresses = jQuery.grep(
+                                            addresses,
+                                            function(value) {
+                                              return address === value;
+                                            });
+      if (matching_addresses.length === 0) {
+        addresses.push(address);
+      }
     }
 
     // remove trailing/leading whitespace and commas
