@@ -14,13 +14,15 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
 
     // TODO adding and deleting emails has to be more robust
     function update_addr_field(el, ui) {
+        var val = el.val();
         if (ui.checked) {
-          el.val(el.val() + ', ' +  ui.value);
+          val = val + ', ' +  ui.value;
         } else {
-          el.val(el.val().replace(ui.value, ''));
+          val = val.replace(ui.value, '');
         }
-        el.val(el.val().replace(/^\s*,/, ''));
-        el.val(el.val().replace(/\s*,\s*$/, ''));
+        val = val.replace(/^\s*,/, '');
+        val = val.replace(/\s*,\s*$/, '');
+        el.val(val);
     }
 
     function _make_select(id) {
