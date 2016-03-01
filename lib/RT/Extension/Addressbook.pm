@@ -71,21 +71,21 @@ This is free software, licensed under:
 
 =cut
 
-sub get_emailaddresses {
-    my ($QueueId) = @_;
+sub get_addresses {
+    my ($ticket) = @_;
+    my $queue_id = $ticket->Queue;
     my $dbh = RT->DatabaseHandle->dbh;
     $dbh->{FetchHashKeyName} = 'NAME_lc';
-    my $sth = $dbh->prepare('SELECT address FROM AddressBooks ORDER BY address ASC');
-    #  where IdQueue = :queueid');
-    #  $sth->bind_param(':queueid', $QueueId);
-    $sth->execute;
-    return $sth->fetchall_arrayref;
+    my $sql = 'SELECT email FROM AddressBooks WHERE queue_id = ? ORDER BY email ASC';
+    my $sth = $dbh->prepare($sql);
+    $sth->execute($queue_id) or die $sth->errstr;;
+    my @rows = map { $_->[0] } @{ $sth->fetchall_arrayref };
+    return \@rows;
 }
 
 RT->AddStyleSheets('jquery.multiselect.css');
 RT->AddStyleSheets('jquery.multiselect.filter.css');
 RT->AddJavaScript('jquery.multiselect.min.js');
 RT->AddJavaScript('jquery.multiselect.filter.min.js');
-
 
 1;

@@ -1,11 +1,9 @@
 <%ARGS>
-
+$Ticket
 </%ARGS>
 <%INIT>
 use RT::Extension::Addressbook;
-
-my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
-
+my $addressbook = RT::Extension::Addressbook::get_addresses($Ticket);
 </%INIT>
 
 <script>
@@ -14,13 +12,13 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
 
     var addressbook = [];
 %for my $row ( @$addressbook ) {
-    addressbook.push('<%$row->[0]%>');
+    addressbook.push('<%$row%>');
 %}
 
     // add/rm address depending on select checkbox state
     function _update_addr_field(el, ui) {
-        var val = el.val();
-        var addresses  = val.split(',');
+        var val       = el.val();
+        var addresses = val.split(',');
         _sanitize_addresses(addresses);
         if (ui.checked) {
           _add_address(addresses, ui.value);
@@ -74,9 +72,8 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
     jQuery.each(['UpdateCc', 'UpdateBcc'], function(index, value) {
       var addr_field_id = value;
       var select_id     = addr_field_id + '-select';
-      var text          = _make_select(select_id);
       var addr_field    = jQuery('#'+addr_field_id);
-      addr_field.after(text);
+      addr_field.after(_make_select(select_id));
       jQuery('#'+select_id).multiselect({
         header: false,
         click: function(event, ui) { _update_addr_field(addr_field, ui) }

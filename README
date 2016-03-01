@@ -22,11 +22,19 @@ INSTALLATION
     Restart your webserver
 
     # Create DB table
-    CREATE TABLE AdressBooks (
+    CREATE TABLE AddressBooks (
         id INT NOT NULL AUTO_INCREMENT,
-        address VARCHAR(512) NOT NULL,
-        PRIMARY KEY(id)
+        queue_id INT NOT NULL,
+        name VARCHAR(512) NOT NULL,
+        email VARCHAR(512) NOT NULL,
+        PRIMARY KEY(id),
+        FOREIGN KEY(queue_id) REFERENCES Queues(id)
     );
+    INSERT INTO AddressBooks
+        (name, email, queue_id)
+    VALUES
+        ('Mark Hofstetter', 'mark@hofstetter.at', 1),
+        ('David Schmidt', 'davewood@gmx.at', 1);
 
 AUTHOR
     Mark Hofstetter, University of Vienna <mark@hofstetter.at>
