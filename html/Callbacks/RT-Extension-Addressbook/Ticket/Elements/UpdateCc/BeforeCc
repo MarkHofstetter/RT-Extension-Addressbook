@@ -17,6 +17,7 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
     addressbook.push('<%$row->[0]%>');
 %}
 
+    // add/rm address depending on select checkbox state
     function _update_addr_field(el, ui) {
         var val = el.val();
         var addresses  = val.split(',');
@@ -59,6 +60,7 @@ my $addressbook = RT::Extension::Addressbook::get_emailaddresses;
         });
     }
 
+    // create select HTML
     function _make_select(id) {
       var select = '<select id="' + id + '" multiple="multiple" size="10">';
       jQuery.each(addressbook, function(index, value) {
