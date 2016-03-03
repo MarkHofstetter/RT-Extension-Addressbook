@@ -9,6 +9,6 @@ pod2htm*.tmp
 RT-Extension-Addressbook*
 *.bak
 *.swp
-MYMETA.*
-t/tmp
-xt/tmp
+/MYMETA.*
+/t/tmp
+/xt/tmp
