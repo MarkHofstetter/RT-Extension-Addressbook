@@ -36,6 +36,10 @@ INSTALLATION
         ('Mark Hofstetter', 'mark@hofstetter.at', 1),
         ('David Schmidt', 'davewood@gmx.at', 1);
 
+CONFIGURATION
+    You can override the defaults (see etc/AddressBook_Config.pm)
+    in your etc/RT_SiteConfig.pm
+
 AUTHOR
     Mark Hofstetter, University of Vienna <mark@hofstetter.at>
 
