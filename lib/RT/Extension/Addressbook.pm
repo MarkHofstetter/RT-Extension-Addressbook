@@ -71,15 +71,16 @@ This is free software, licensed under:
 
 =cut
 
+my $config    = RT->Config->Get('Addressbook');
+my $table     = $config->{table};
+my $email_col = $config->{email_col};
+my $sql       = "SELECT $email_col FROM $table WHERE queue_id = ? ORDER BY $email_col ASC";
+
 sub get_addresses {
-    my ($ticket)  = @_;
-    my $config    = RT->Config->Get('AddressBook');
-    my $table     = $config->{table};
-    my $email_col = $config->{email_col};
-    my $queue_id  = $ticket->Queue;
-    my $dbh       = RT->DatabaseHandle->dbh;
+    my ($ticket) = @_;
+    my $queue_id = $ticket->Queue;
+    my $dbh      = RT->DatabaseHandle->dbh;
     $dbh->{FetchHashKeyName} = 'NAME_lc';
-    my $sql = "SELECT $email_col FROM $table WHERE queue_id = ? ORDER BY $email_col ASC";
     my $sth = $dbh->prepare($sql);
     $sth->execute($queue_id) or die $sth->errstr;
     my @rows = map { $_->[0] } @{ $sth->fetchall_arrayref };
