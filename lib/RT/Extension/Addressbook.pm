@@ -6,18 +6,16 @@ our $VERSION = '0.01';
 
 =head1 NAME
 
-RT-Extension-Addressbook - [One line description of module's purpose here]
+RT-Extension-Addressbook - pick a contact from your addressbook
 
 =head1 DESCRIPTION
 
-[Why would someone install this extension? What does it do? What problem
-does it solve?]
+This extension lets you pick recipients via a select field.
+The contacts in the select field are fetched from a database table.
 
 =head1 RT VERSION
 
-Works with RT [What versions of RT is this known to work with?]
-
-[Make sure to use requires_rt and rt_too_new in Makefile.PL]
+Works with RT > 4.4.0
 
 =head1 INSTALLATION
 
@@ -29,19 +27,11 @@ Works with RT [What versions of RT is this known to work with?]
 
 =item C<make install>
 
-May need root permissions
+may need root permissions
 
-=item Edit your F</opt/rt4/etc/RT_SiteConfig.pm>
-
-If you are using RT 4.2 or greater, add this line:
+=item Edit F</opt/rt4/etc/RT_SiteConfig.pm>
 
     Plugin('RT::Extension::Addressbook');
-
-For RT 4.0, add this line:
-
-    Set(@Plugins, qw(RT::Extension::Addressbook));
-
-or add C<RT::Extension::Addressbook> to your existing C<@Plugins> line.
 
 =item Clear your mason cache
 
@@ -49,11 +39,36 @@ or add C<RT::Extension::Addressbook> to your existing C<@Plugins> line.
 
 =item Restart your webserver
 
+=item Create DB table
+
+    CREATE TABLE Addressbooks (
+        id INT NOT NULL AUTO_INCREMENT,
+        queue_id INT NOT NULL,
+        name VARCHAR(512) NOT NULL,
+        email VARCHAR(512) NOT NULL,
+        PRIMARY KEY(id),
+        FOREIGN KEY(queue_id) REFERENCES Queues(id)
+    );
+    INSERT INTO Addressbooks
+        (name, email, queue_id)
+    VALUES
+        ('Mark Hofstetter', 'mark@hofstetter.at', 1),
+        ('David Schmidt', 'davewood@gmx.at', 1);
+
+
 =back
+
+=head1 CONFIGURATION
+
+You can override the defaults (see etc/Addressbook_Config.pm) in your etc/RT_SiteConfig.pm
 
 =head1 AUTHOR
 
-Mark Hofstetter, University of Vienna E<lt>mark@hofstetter.atE<gt>
+Mark Hofstetter, University of Vienna E<lt>mark@hofstetter.atE<gt>.
+
+=head1 CONTRIBUTORS
+
+David Schmidt, University of Vienna E<lt>davewood@gmx.atE<gt>.
 
 =head1 BUGS
 
