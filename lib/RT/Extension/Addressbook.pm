@@ -4,14 +4,7 @@ package RT::Extension::Addressbook;
 
 our $VERSION = '0.01';
 
-=head1 NAME
-
-RT-Extension-Addressbook - pick a contact from your addressbook
-
-=head1 DESCRIPTION
-
-This extension lets you pick recipients via a select field.
-The contacts in the select field are fetched from a database table.
+# ABSTRACT: An extension to Best Practical Request Tracker (https://www.bestpractical.com/rt/) which creates a dropdown for adding multiple recipients in a reply form.
 
 =head1 RT VERSION
 
