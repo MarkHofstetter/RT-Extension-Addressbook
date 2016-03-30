@@ -24,11 +24,11 @@ INSTALLATION
     # Create DB table
     CREATE TABLE Addressbooks (
         id INT NOT NULL AUTO_INCREMENT,
-        queue_id INT NOT NULL,
-        name VARCHAR(512) NOT NULL,
-        email VARCHAR(512) NOT NULL,
+        IdQueue INT NOT NULL,
+        Address VARCHAR(512) NOT NULL,
+        Disabled TINYINT(1) DEFAULT 0,
         PRIMARY KEY(id),
-        FOREIGN KEY(queue_id) REFERENCES Queues(id)
+        FOREIGN KEY(IdQueue) REFERENCES Queues(id)
     );
     INSERT INTO Addressbooks
         (name, email, queue_id)
