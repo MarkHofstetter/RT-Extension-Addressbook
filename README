@@ -43,6 +43,9 @@ CONFIGURATION
 AUTHOR
     Mark Hofstetter, University of Vienna <mark@hofstetter.at>
 
+CONTRIBUTORS
+    David Schmidt, University of Vienna <davewood@gmx.at>
+
 BUGS
     All bugs should be reported via the web at
     L<https://github.com/MarkHofstetter/RT-Extension-Addressbook/issues>.
