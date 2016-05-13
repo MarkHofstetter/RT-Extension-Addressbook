@@ -22,7 +22,7 @@ INSTALLATION
     Restart your webserver
 
     # Create DB table
-    CREATE TABLE Addressbooks (
+    CREATE TABLE AddressBooks (
         id INT NOT NULL AUTO_INCREMENT,
         IdQueue INT NOT NULL,
         Address VARCHAR(512) NOT NULL,
@@ -30,11 +30,13 @@ INSTALLATION
         PRIMARY KEY(id),
         FOREIGN KEY(IdQueue) REFERENCES Queues(id)
     );
-    INSERT INTO Addressbooks
-        (name, email, queue_id)
+    INSERT INTO AddressBooks
+        (IdQueue, Address)
     VALUES
-        ('Mark Hofstetter', 'mark@hofstetter.at', 1),
-        ('David Schmidt', 'davewood@gmx.at', 1);
+        (0, 'mark@hofstetter.at'),
+        (1, 'mark@hofstetter.at'),
+        (0, 'davewood@gmx.at'),
+        (1, 'davewood@gmx.at');
 
 CONFIGURATION
     You can override the defaults (see etc/Addressbook_Config.pm)
