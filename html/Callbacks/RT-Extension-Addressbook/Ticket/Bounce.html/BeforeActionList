@@ -1,0 +1,84 @@
+<%ARGS>
+$Ticket
+</%ARGS>
+<%INIT>
+use RT::Extension::Addressbook;
+my $addressbook = RT::Extension::Addressbook::get_addresses($Ticket);
+</%INIT>
+
+<script>
+  jQuery('document').ready(function() {
+    "use strict";
+
+    var addressbook = [];
+%for my $row ( @$addressbook ) {
+    addressbook.push('<%$row%>');
+%}
+
+    // add/rm address depending on select checkbox state
+    function _update_addr_field(el, ui) {
+        var val       = el.val();
+        var addresses = val.split(',');
+        _sanitize_addresses(addresses);
+        if (ui.checked) {
+          _add_address(addresses, ui.value);
+        } else {
+          addresses = jQuery.grep(
+            addresses,
+            function(address) { return address !== ui.value }
+          );
+        }
+        el.val(addresses.join(', '));
+    }
+
+    // add address only if it doesnt exist already
+    function _add_address(addresses, address) {
+      var matching_addresses = jQuery.grep(
+                                            addresses,
+                                            function(value) {
+                                              return address === value;
+                                            });
+      if (matching_addresses.length === 0) {
+        addresses.push(address);
+      }
+    }
+
+    // remove trailing/leading whitespace and commas
+    // also remove entirely empty strings
+    function _sanitize_addresses(addresses) {
+        jQuery.each(addresses, function(index, value) {
+          value = value.replace(/^\s*,*\s*/, '');
+          value = value.replace(/\s*,*\s*$/, '');
+          if (value === '') {
+            addresses.splice(index, 1);
+          }
+          else {
+            addresses[index] = value;
+          }
+        });
+    }
+
+    // create select HTML
+    function _make_select(id) {
+      var select = '<select id="' + id + '" multiple="multiple" size="10">';
+      jQuery.each(addressbook, function(index, value) {
+        select += '<option value="' + value + '">' + value + '</option>';
+      });
+      select += '</select>';
+      return select;
+    }
+
+    // add a select field after the CC and BCC address fields
+    jQuery.each(['To', 'Cc', 'Bcc'], function(index, value) {
+      var addr_field_id = value;
+      var select_id     = addr_field_id + '-select';
+      var addr_field    = jQuery('#'+addr_field_id);
+      addr_field.after(_make_select(select_id));
+      jQuery('#'+select_id).multiselect({
+        header: false,
+        click: function(event, ui) { _update_addr_field(addr_field, ui) }
+      });
+    });
+
+  });
+</script>
